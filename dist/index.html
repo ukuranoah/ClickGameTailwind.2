@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch -->
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./output.css">
+    <title>Super Sick Click Game</title>
+  
+</head>
+<body class="bg-blue-300 text-center">
+    <h1 class="text-4xl text-cyan-200 font-extrabold tracking-widest ">Super Sick Click Game</h1>
+
+    <div class="headerDiv text-cyan-200">
+        <div class="dpsDiv w-10 h-10 fixed left-2 ">
+            <img title="Click Damage" src="/images/ball.png" class="dpsImg" alt="">
+            <p id="dpsLabel" class="dpsText font-bold ">0</p>
+        </div>
+        <div class="moneyDiv w-14 h-14 fixed left-24">
+            <img title="Gold" src="/images/coin.png" alt="Gold" class="goldImg">
+            <p id="goldLabel" class="goldText font-bold ">0</p>
+        </div>
+        
+       
+        <div class="themeSelectDiv float-right font-bold text-center text-cyan-200 mr-1">
+            <input type="radio" value="Ocean" name="themeBtn" id="themeSelectOption" onclick="oceanTheme()">Ocean</input><br>
+            <input type="radio" value="Light" name="themeBtn" id="themeSelectOption" onclick="lightTheme()">Light</input><br>
+            <input type="radio" value="Dark" name="themeBtn" id="themeSelectOption" onclick="darkTheme()">Dark</input>
+            
+        </div>
+    </div>
+
+    <div class="container max-w-none min-w-none mt-10">
+          <br>
+            <img src="/images/shop.png" alt="" id="shopBtn" class="w-20"> 
+           
+            
+            <div class="shopDiv fixed top-50 bg-cyan-700 rounded-3xl text-xl text-cyan-200" id="shopDiv">
+                
+                <h2>Shop</h2><hr>
+                <div class="shopItem p-8">
+                    <p class="shopItemText">Great Ball</p>
+                    <button type="button" title="5g" class="shopBuyBtn rounded-3xl bg-cyan-400 w-16 text-xs text-cyan-700" id="greatBallBtn">Buy</button>
+                </div>
+                <div class="shopItem pb-8">
+                    <p class="shopItemText">Master Ball</p>
+                    <button type="button" title="50g" class="shopBuyBtn rounded-3xl bg-cyan-400 w-16 text-xs" id="masterBallBtn">Buy</button>
+                </div>
+            </div>
+
+
+
+            <div class="monsterDiv m-auto w-full">
+                <div class="hpBar w-3/12 m-auto border-2 border-white bg-black">
+                    <div class="hpBarInside h-3 w-full bg-black" id="hpBarInside"></div>
+                </div>
+                <p id="monsterHp" name="hp" class="text-3xl pb-5 text-cyan-200 font-extrabold"></p>
+                <a href="" id="monsterImg" class="">
+                    <img id="monsterPic" class="monsterImg w-80 m-auto" src="" alt="">
+                </a>
+                <div class="stageSelectionDiv">
+                
+                    <button type="button" class="stageBtn w-15 bg-cyan-600 hover:bg-cyan-400 p-3 mt-3 rounded-full font-bold text-cyan-200 border-2 border-cyan-200" id="previousStage">Prev</button>
+                    <button type="button" class="stageBtn bg-cyan-600 p-3 mt-3 rounded-full font-bold text-cyan-200" id="nextStage" style="margin-left:75px;">Next</button>
+
+                </div>
+            </div>
+            
+            <p id="stageNum" class="font-bold text-xl text-cyan-200">1</p>
+            
+            
+    </div>
+    <script>
+       
+
+        var hp = document.getElementById('monsterHp')
+        var img = document.getElementById('monsterImg')
+        var gold = document.getElementById('goldLabel')
+        var stageNum = document.getElementById('stageNum')
+        var dpsLabel = document.getElementById('dpsLabel')
+        var hpBar = document.getElementById('hpBarInside')
+        
+
+        var dps = 1
+        var killCount = 0
+        var setHp = 0
+        var stage = 1
+        var goldPerKill = 1
+
+        startGame()
+     
+        function startGame(){
+            
+            // document.getElementById("shopBtn").addEventListener("click", function(){
+            //     var shopDivStyle = document.getElementById('shopDiv').style
+            //     if(shopDivStyle.left != "5px"){
+            //         shopDivStyle.left = "5px"
+            //     }
+            //     else{
+            //         shopDivStyle.left = "-600px"
+            //     }
+            // })
+            document.getElementById("shopBtn").addEventListener("click", shopDisplay)
+                
+            document.getElementById("greatBallBtn").addEventListener("click", function(){
+                var goldInt = Number(gold.innerHTML)
+                if(goldInt >= 5){
+                    gold.innerHTML -= 5
+                    ++dps
+                    newDps(dps)
+                }
+            })
+            document.getElementById("masterBallBtn").addEventListener("click", function(){
+                var goldInt = Number(gold.innerHTML)
+                if(goldInt >= 50){
+                    gold.innerHTML -= 50
+                    dps += 5
+                    newDps(dps)
+                }
+            })
+            document.getElementById("previousStage").addEventListener("click", function(){
+                if(stage > 1){
+                    stageNum.textContent = --stage
+                    stageSelector()
+                }
+                
+            })
+            document.getElementById("nextStage").addEventListener("click", function(){
+                stageNum.textContent = ++stage
+                stageSelector()
+            })
+        
+            stageSelector()
+            newDps(dps)
+        }
+       
+       function stageSelector(){
+            //stage selector
+            if(stage == 1){
+                setHp = 5
+                goldPerKill = 1
+                document.getElementById('monsterPic').src = "/images/monsters/caterpie.png"
+            }
+            else if(stage == 2){
+                setHp = 10
+                goldPerKill = 5
+                document.getElementById('monsterPic').src = "/images/monsters/marill.png"
+            }
+            else if(stage == 3){
+                setHp = 20
+                goldPerKill = 10
+                document.getElementById('monsterPic').src = "/images/monsters/char.png"
+            }
+            else if(stage == 4){
+                setHp = 100
+                goldPerKill = 50
+                document.getElementById('monsterPic').src = "/images/monsters/lugia.png"
+            }
+            //setting initial hp
+            hp.textContent = setHp
+
+            if(dps > hp){
+                
+            }
+            //setting on click for damage and checking if monster is dead
+            img.addEventListener("click", dmgClick)
+        
+       }
+        function dmgClick(){
+           
+            
+            if(hp.textContent > 1){
+                var newHp = hp.textContent -= dps
+                hp.textContent = newHp
+                var percentHp = newHp / setHp
+                hpBar.style.width = percentHp * 100 + "%"
+                hpBar.style.backgroundColor = "red"
+            }
+            else{
+                gold.textContent = Number(gold.textContent) + goldPerKill
+                hp.textContent = setHp   
+                hpBar.style.width = "100%"
+            }
+            event.preventDefault()
+            
+        }
+
+        
+
+        function newDps(newDamage){
+            dpsLabel.innerHTML = newDamage
+        }
+        function oceanTheme(){
+            document.body.style.backgroundColor = "darkcyan"
+        }
+        function lightTheme(){
+            document.body.style.backgroundColor = "gray"
+        }
+        function darkTheme(){
+            document.body.style.backgroundColor = "black"
+        }
+        function shopDisplay(){
+            var shopDiv = document.getElementById("shopDiv")
+            if(window.getComputedStyle(shopDiv).display == "none"){
+                shopDiv.style.display = "block"
+            }
+            else if(window.getComputedStyle(shopDiv).display == "block"){
+                shopDiv.style.display = "none"
+            }
+        }
+        
+    </script>
+    
+</body>
+</html>
