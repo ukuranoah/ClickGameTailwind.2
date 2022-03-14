@@ -21,11 +21,11 @@
 <br>
     <div class="headerDiv text-cyan-200">
         <div class="dpsDiv w-10 h-10 fixed left-2">
-            <img title="Click Damage" src="../images/ball.png" class="dpsImg w-14 animate-spin" alt="">
+            <img title="Click Damage" src="./images/ball.png" class="dpsImg w-14 animate-spin" alt="">
             <p id="dpsLabel" class="dpsText font-bold text-3xl">0</p>
         </div>
         <div class="moneyDiv fixed left-24">
-            <img title="Gold" src="../images/coin.png" alt="Gold" class="goldImg w-14">
+            <img title="Gold" src="./images/coin.png" alt="Gold" class="goldImg w-14">
             <p id="goldLabel" class="goldText font-bold text-3xl">0</p>
         </div>
         
@@ -41,7 +41,7 @@
 
     <div class="container max-w-none min-w-none mt-10">
           <br>
-            <img src="../images/shop.png" alt="" id="shopBtn" class="w-20 fixed left-2 top-40 animate-pulse"> 
+            <img src="./images/shop.png" alt="" id="shopBtn" class="w-20 fixed left-2 top-40 animate-pulse"> 
            
             
             <div class="shopDiv fixed top-60 left-3 bg-cyan-700 rounded-3xl text-xl text-cyan-200 border-2 border-cyan-200" id="shopDiv">
@@ -148,22 +148,22 @@
             if(stage == 1){
                 setHp = 5
                 goldPerKill = 1
-                document.getElementById('monsterPic').src = "../images/monsters/caterpie.png"
+                document.getElementById('monsterPic').src = "./images/monsters/caterpie.png"
             }
             else if(stage == 2){
                 setHp = 10
                 goldPerKill = 5
-                document.getElementById('monsterPic').src = "../images/monsters/marill.png"
+                document.getElementById('monsterPic').src = "./images/monsters/marill.png"
             }
             else if(stage == 3){
                 setHp = 20
                 goldPerKill = 10
-                document.getElementById('monsterPic').src = "../images/monsters/char.png"
+                document.getElementById('monsterPic').src = "./images/monsters/char.png"
             }
             else if(stage == 4){
                 setHp = 100
                 goldPerKill = 50
-                document.getElementById('monsterPic').src = "../images/monsters/lugia.png"
+                document.getElementById('monsterPic').src = "./images/monsters/lugia.png"
             }
             //setting initial hp
             hp.textContent = setHp
