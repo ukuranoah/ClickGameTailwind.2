@@ -8,23 +8,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./output.css">
     <title>Super Sick Click Game</title>
-  
-</head>
-<body class="bg-blue-300 text-center">
-    <h1 class="text-4xl text-cyan-200 font-extrabold tracking-widest ">Super Sick Click Game</h1>
+    <style>
 
+        .animate-ping{
+            animation: ping 1s cubic-bezier(0, 0, 0.2, 1);
+        }
+
+    </style>
+</head>
+<body class="bg-cyan-800 text-center">
+    <h1 class="text-4xl text-cyan-200 font-extrabold tracking-widest ">Super Sick Click Game</h1>
+<br>
     <div class="headerDiv text-cyan-200">
-        <div class="dpsDiv w-10 h-10 fixed left-2 ">
-            <img title="Click Damage" src="/images/ball.png" class="dpsImg" alt="">
-            <p id="dpsLabel" class="dpsText font-bold ">0</p>
+        <div class="dpsDiv w-10 h-10 fixed left-2">
+            <img title="Click Damage" src="../images/ball.png" class="dpsImg w-14 animate-spin" alt="">
+            <p id="dpsLabel" class="dpsText font-bold text-3xl">0</p>
         </div>
-        <div class="moneyDiv w-14 h-14 fixed left-24">
-            <img title="Gold" src="/images/coin.png" alt="Gold" class="goldImg">
-            <p id="goldLabel" class="goldText font-bold ">0</p>
+        <div class="moneyDiv fixed left-24">
+            <img title="Gold" src="../images/coin.png" alt="Gold" class="goldImg w-14">
+            <p id="goldLabel" class="goldText font-bold text-3xl">0</p>
         </div>
         
        
-        <div class="themeSelectDiv float-right font-bold text-center text-cyan-200 mr-1">
+        <div class="themeSelectDiv float-right font-bold text-left text-cyan-200 mr-1 bg-cyan-700 p-2.5 border-2 border-cyan-200">
+            <p class="text-center">Theme</p> <hr>
             <input type="radio" value="Ocean" name="themeBtn" id="themeSelectOption" onclick="oceanTheme()">Ocean</input><br>
             <input type="radio" value="Light" name="themeBtn" id="themeSelectOption" onclick="lightTheme()">Light</input><br>
             <input type="radio" value="Dark" name="themeBtn" id="themeSelectOption" onclick="darkTheme()">Dark</input>
@@ -34,27 +41,27 @@
 
     <div class="container max-w-none min-w-none mt-10">
           <br>
-            <img src="/images/shop.png" alt="" id="shopBtn" class="w-20"> 
+            <img src="../images/shop.png" alt="" id="shopBtn" class="w-20 fixed left-2 top-40 animate-pulse"> 
            
             
-            <div class="shopDiv fixed top-50 bg-cyan-700 rounded-3xl text-xl text-cyan-200" id="shopDiv">
+            <div class="shopDiv fixed top-60 left-3 bg-cyan-700 rounded-3xl text-xl text-cyan-200 border-2 border-cyan-200" id="shopDiv">
                 
                 <h2>Shop</h2><hr>
                 <div class="shopItem p-8">
                     <p class="shopItemText">Great Ball</p>
-                    <button type="button" title="5g" class="shopBuyBtn rounded-3xl bg-cyan-400 w-16 text-xs text-cyan-700" id="greatBallBtn">Buy</button>
+                    <button type="button" title="5g" class="shopBuyBtn rounded-3xl bg-cyan-400 w-16 text-xs border-2 border-cyan-200 text-cyan-600" id="greatBallBtn">Buy</button>
                 </div>
                 <div class="shopItem pb-8">
                     <p class="shopItemText">Master Ball</p>
-                    <button type="button" title="50g" class="shopBuyBtn rounded-3xl bg-cyan-400 w-16 text-xs" id="masterBallBtn">Buy</button>
+                    <button type="button" title="50g" class="shopBuyBtn rounded-3xl bg-cyan-400 w-16 text-xs border-2 border-cyan-200 text-cyan-600" id="masterBallBtn">Buy</button>
                 </div>
             </div>
 
 
 
-            <div class="monsterDiv m-auto w-full">
-                <div class="hpBar w-3/12 m-auto border-2 border-white bg-black">
-                    <div class="hpBarInside h-3 w-full bg-black" id="hpBarInside"></div>
+            <div class="monsterDiv m-auto w-full flex flex-col">
+                <div class="hpBar w-3/12 m-auto border-2 border-white bg-black rounded-full">
+                    <div class="hpBarInside h-3 w-full bg-red-600 rounded-full" id="hpBarInside"></div>
                 </div>
                 <p id="monsterHp" name="hp" class="text-3xl pb-5 text-cyan-200 font-extrabold"></p>
                 <a href="" id="monsterImg" class="">
@@ -62,8 +69,8 @@
                 </a>
                 <div class="stageSelectionDiv">
                 
-                    <button type="button" class="stageBtn w-15 bg-cyan-600 hover:bg-cyan-400 p-3 mt-3 rounded-full font-bold text-cyan-200 border-2 border-cyan-200" id="previousStage">Prev</button>
-                    <button type="button" class="stageBtn bg-cyan-600 p-3 mt-3 rounded-full font-bold text-cyan-200" id="nextStage" style="margin-left:75px;">Next</button>
+                    <button type="button" class="stageBtn w-15 bg-cyan-600 hover:bg-cyan-400 hover:animate-pulse p-3 mt-3 rounded-full font-bold text-cyan-200 border-2 border-cyan-200" id="previousStage">Prev</button>
+                    <button type="button" class="stageBtn bg-cyan-600 hover:bg-cyan-400 hover:animate-pulse p-3 mt-3 rounded-full font-bold text-cyan-200 border-2 border-cyan-200" id="nextStage" style="margin-left:75px;">Next</button>
 
                 </div>
             </div>
@@ -141,22 +148,22 @@
             if(stage == 1){
                 setHp = 5
                 goldPerKill = 1
-                document.getElementById('monsterPic').src = "/images/monsters/caterpie.png"
+                document.getElementById('monsterPic').src = "../images/monsters/caterpie.png"
             }
             else if(stage == 2){
                 setHp = 10
                 goldPerKill = 5
-                document.getElementById('monsterPic').src = "/images/monsters/marill.png"
+                document.getElementById('monsterPic').src = "../images/monsters/marill.png"
             }
             else if(stage == 3){
                 setHp = 20
                 goldPerKill = 10
-                document.getElementById('monsterPic').src = "/images/monsters/char.png"
+                document.getElementById('monsterPic').src = "../images/monsters/char.png"
             }
             else if(stage == 4){
                 setHp = 100
                 goldPerKill = 50
-                document.getElementById('monsterPic').src = "/images/monsters/lugia.png"
+                document.getElementById('monsterPic').src = "../images/monsters/lugia.png"
             }
             //setting initial hp
             hp.textContent = setHp
@@ -169,7 +176,10 @@
         
        }
         function dmgClick(){
-           
+            var monsterPic = document.getElementById('monsterPic')
+            
+                
+            
             
             if(hp.textContent > 1){
                 var newHp = hp.textContent -= dps
@@ -182,11 +192,19 @@
                 gold.textContent = Number(gold.textContent) + goldPerKill
                 hp.textContent = setHp   
                 hpBar.style.width = "100%"
+                imageClass()
+                monsterPic.className = "monsterImg w-80 m-auto"
+
+                
             }
             event.preventDefault()
             
         }
 
+        function imageClass(){
+            monsterPic.className = "monsterImg w-80 m-auto animate-ping"
+            setTimeout(imageClass, 1000);
+        }
         
 
         function newDps(newDamage){
@@ -211,6 +229,11 @@
             }
         }
         
+
+
+        
+
+
     </script>
     
 </body>
