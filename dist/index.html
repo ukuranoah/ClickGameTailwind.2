@@ -192,7 +192,7 @@
                 gold.textContent = Number(gold.textContent) + goldPerKill
                 hp.textContent = setHp   
                 hpBar.style.width = "100%"
-                imageClass()
+                imageAnimation()
                 monsterPic.className = "monsterImg w-80 m-auto"
 
                 
@@ -201,9 +201,9 @@
             
         }
 
-        function imageClass(){
-            monsterPic.className = "monsterImg w-80 m-auto animate-ping"
-            setTimeout(imageClass, 1000);
+        function imageAnimation(){
+            monsterPic.className += " animate-ping"
+            setTimeout(imageAnimation, 1000);
         }
         
 
