@@ -47,34 +47,48 @@
             <div class="shopDiv fixed top-60 left-3 bg-cyan-700 rounded-3xl text-xl text-cyan-200 border-2 border-cyan-200" id="shopDiv">
                 
                 <h2>Shop</h2><hr>
+                <!-- Shop Item 1 -->
                 <div class="shopItem p-8">
-                    <p class="shopItemText">Great Ball</p>
-                    <button type="button" title="5g" class="shopBuyBtn rounded-3xl bg-cyan-400 w-16 text-xs border-2 border-cyan-200 text-cyan-600" id="greatBallBtn">Buy</button>
+                    <p class="shopItemText">Poké Ball</p>
+                    <button type="button" title="5g" class="shopBuyBtn rounded-3xl bg-cyan-400 w-16 text-xs border-2 border-cyan-200 text-cyan-600" id="pokeBallBtn">Buy</button>
                 </div>
+                <!-- Shop item 2 -->
+                <div class="shopItem pb-8">
+                    <p class="shopItemText">Great Ball</p>
+                    <button type="button" title="50g" class="shopBuyBtn rounded-3xl bg-cyan-400 w-16 text-xs border-2 border-cyan-200 text-cyan-600" id="greatBallBtn">Buy</button>
+                </div>
+                <!-- Shop item 3 -->
+                <div class="shopItem pb-8">
+                    <p class="shopItemText">Ultra Ball</p>
+                    <button type="button" title="1000g" class="shopBuyBtn rounded-3xl bg-cyan-400 w-16 text-xs border-2 border-cyan-200 text-cyan-600" id="ultraBallBtn">Buy</button>
+                </div>
+                <!-- Shop item ? -->
                 <div class="shopItem pb-8">
                     <p class="shopItemText">Master Ball</p>
-                    <button type="button" title="50g" class="shopBuyBtn rounded-3xl bg-cyan-400 w-16 text-xs border-2 border-cyan-200 text-cyan-600" id="masterBallBtn">Buy</button>
+                    <button type="button" title="1000000g" class="shopBuyBtn rounded-3xl bg-cyan-400 w-16 text-xs border-2 border-cyan-200 text-cyan-600" id="masterBallBtn">Buy</button>
                 </div>
             </div>
 
 
 
             <div class="monsterDiv m-auto w-full flex flex-col">
+                <!-- Health Bar -->
                 <div class="hpBar w-3/12 m-auto border-2 border-white bg-black rounded-full">
                     <div class="hpBarInside h-3 w-full bg-red-600 rounded-full" id="hpBarInside"></div>
                 </div>
+                <!-- Health Number -->
                 <p id="monsterHp" name="hp" class="text-3xl pb-5 text-cyan-200 font-extrabold"></p>
+                <!-- Monster Image -->
                 <a href="" id="monsterImg" class="">
                     <img id="monsterPic" class="monsterImg w-80 m-auto" src="" alt="">
                 </a>
+                <!-- Stage selection buttons -->
                 <div class="stageSelectionDiv">
-                
                     <button type="button" class="stageBtn w-15 bg-cyan-600 hover:bg-cyan-400 hover:animate-pulse p-3 mt-3 rounded-full font-bold text-cyan-200 border-2 border-cyan-200" id="previousStage">Prev</button>
                     <button type="button" class="stageBtn bg-cyan-600 hover:bg-cyan-400 hover:animate-pulse p-3 mt-3 rounded-full font-bold text-cyan-200 border-2 border-cyan-200" id="nextStage" style="margin-left:75px;">Next</button>
-
                 </div>
             </div>
-            
+            <!-- Stage Number -->
             <p id="stageNum" class="font-bold text-xl text-cyan-200">1</p>
             
             
@@ -99,19 +113,18 @@
         startGame()
      
         function startGame(){
+       
+            if(localStorage.getItem("dps") != 1){
+                dps = localStorage.getItem("dps")
+            }
+            if(localStorage.getItem("gold") != 0){
+                gold.innerHTML = localStorage.getItem("gold")
+            }
             
-            // document.getElementById("shopBtn").addEventListener("click", function(){
-            //     var shopDivStyle = document.getElementById('shopDiv').style
-            //     if(shopDivStyle.left != "5px"){
-            //         shopDivStyle.left = "5px"
-            //     }
-            //     else{
-            //         shopDivStyle.left = "-600px"
-            //     }
-            // })
+            
             document.getElementById("shopBtn").addEventListener("click", shopDisplay)
-                
-            document.getElementById("greatBallBtn").addEventListener("click", function(){
+            
+            document.getElementById("pokeBallBtn").addEventListener("click", function(){
                 var goldInt = Number(gold.innerHTML)
                 if(goldInt >= 5){
                     gold.innerHTML -= 5
@@ -119,11 +132,27 @@
                     newDps(dps)
                 }
             })
+            document.getElementById("greatBallBtn").addEventListener("click", function(){
+                var goldInt = Number(gold.innerHTML)
+                if(goldInt >= 1000){
+                    gold.innerHTML -= 1000
+                    dps += 30
+                    newDps(dps)
+                }
+            })
+            document.getElementById("ultraBallBtn").addEventListener("click", function(){
+                var goldInt = Number(gold.innerHTML)
+                if(goldInt >= 10000){
+                    gold.innerHTML -= 10000
+                    dps += 300
+                    newDps(dps)
+                }
+            })
             document.getElementById("masterBallBtn").addEventListener("click", function(){
                 var goldInt = Number(gold.innerHTML)
-                if(goldInt >= 50){
-                    gold.innerHTML -= 50
-                    dps += 5
+                if(goldInt >= 100000){
+                    gold.innerHTML -= 100000
+                    dps += 3000
                     newDps(dps)
                 }
             })
@@ -135,12 +164,16 @@
                 
             })
             document.getElementById("nextStage").addEventListener("click", function(){
-                stageNum.textContent = ++stage
-                stageSelector()
+                if(stageNum.textContent < 6){
+                    stageNum.textContent = ++stage
+                    stageSelector()
+                }
+                
             })
         
             stageSelector()
             newDps(dps)
+
         }
        
        function stageSelector(){
@@ -148,22 +181,32 @@
             if(stage == 1){
                 setHp = 5
                 goldPerKill = 1
-                document.getElementById('monsterPic').src = "../images/monsters/caterpie.png"
+                document.getElementById('monsterPic').src = "caterpie.png"
             }
             else if(stage == 2){
                 setHp = 10
                 goldPerKill = 5
-                document.getElementById('monsterPic').src = "../images/monsters/marill.png"
+                document.getElementById('monsterPic').src = "./images/monsters/marill.png"
             }
             else if(stage == 3){
                 setHp = 20
                 goldPerKill = 10
-                document.getElementById('monsterPic').src = "../images/monsters/char.png"
+                document.getElementById('monsterPic').src = "../monsters/char.png"
             }
             else if(stage == 4){
                 setHp = 100
                 goldPerKill = 50
-                document.getElementById('monsterPic').src = "../images/monsters/lugia.png"
+                document.getElementById('monsterPic').src = "./monsters/lugia.png"
+            }
+            else if(stage == 5){
+                setHp = 9999
+                goldPerKill = 5000
+                document.getElementById('monsterPic').src = "./sadge.png"
+            }
+            else if(stage == 6){
+                setHp = 999999
+                goldPerKill = 50000
+                document.getElementById('monsterPic').src = "../images/monsters/craig.png"
             }
             //setting initial hp
             hp.textContent = setHp
@@ -177,10 +220,7 @@
        }
         function dmgClick(){
             var monsterPic = document.getElementById('monsterPic')
-            
-                
-            
-            
+           
             if(hp.textContent > 1){
                 var newHp = hp.textContent -= dps
                 hp.textContent = newHp
@@ -194,11 +234,11 @@
                 hpBar.style.width = "100%"
                 imageAnimation()
                 monsterPic.className = "monsterImg w-80 m-auto"
-
-                
+                localStorage.setItem("gold", gold.textContent)
             }
             event.preventDefault()
             
+
         }
 
         function imageAnimation(){
@@ -209,6 +249,7 @@
 
         function newDps(newDamage){
             dpsLabel.innerHTML = newDamage
+            localStorage.setItem("dps", dps)
         }
         function oceanTheme(){
             document.body.style.backgroundColor = "darkcyan"
