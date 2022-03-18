@@ -113,13 +113,15 @@
         startGame()
      
         function startGame(){
-       
-            if(localStorage.getItem("dps") != 1){
-                dps = localStorage.getItem("dps")
+            if(localStorage){
+                if(localStorage.getItem("dps") != 1){
+                    dps = localStorage.getItem("dps")
+                }
+                if(localStorage.getItem("gold") != 0){
+                    gold.innerHTML = localStorage.getItem("gold")
+                }
             }
-            if(localStorage.getItem("gold") != 0){
-                gold.innerHTML = localStorage.getItem("gold")
-            }
+            
             
             
             document.getElementById("shopBtn").addEventListener("click", shopDisplay)
