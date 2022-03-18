@@ -21,11 +21,11 @@
 <br>
     <div class="headerDiv text-cyan-200">
         <div class="dpsDiv w-10 h-10 fixed left-2">
-            <img title="Click Damage" src="../images/ball.png" class="dpsImg w-14 animate-spin" alt="">
+            <img title="Click Damage" src="./images/ball.png" class="dpsImg w-14 animate-spin" alt="">
             <p id="dpsLabel" class="dpsText font-bold text-3xl">0</p>
         </div>
         <div class="moneyDiv fixed left-24">
-            <img title="Gold" src="../images/coin.png" alt="Gold" class="goldImg w-14">
+            <img title="Gold" src="./images/coin.png" alt="Gold" class="goldImg w-14">
             <p id="goldLabel" class="goldText font-bold text-3xl">0</p>
         </div>
         
@@ -41,7 +41,7 @@
 
     <div class="container max-w-none min-w-none mt-10">
           <br>
-            <img src="../images/shop.png" alt="" id="shopBtn" class="w-20 fixed left-2 top-40 animate-pulse"> 
+            <img src="./images/shop.png" alt="" id="shopBtn" class="w-20 fixed left-2 top-40 animate-pulse"> 
            
             
             <div class="shopDiv fixed top-60 left-3 bg-cyan-700 rounded-3xl text-xl text-cyan-200 border-2 border-cyan-200" id="shopDiv">
@@ -113,14 +113,14 @@
         startGame()
      
         function startGame(){
-            if(localStorage){
-                if(localStorage.getItem("dps") != 1){
-                    dps = localStorage.getItem("dps")
-                }
-                if(localStorage.getItem("gold") != 0){
-                    gold.innerHTML = localStorage.getItem("gold")
-                }
-            }
+            // if(localStorage){
+            //     if(localStorage.getItem("dps") != 1){
+            //         dps = localStorage.getItem("dps")
+            //     }
+            //     if(localStorage.getItem("gold") != 0){
+            //         gold.innerHTML = localStorage.getItem("gold")
+            //     }
+            // }
             
             
             
@@ -211,11 +211,8 @@
                 document.getElementById('monsterPic').src = "./images/monsters/craig.png"
             }
             //setting initial hp
-            hp.textContent = setHp
+            hp.textContent = formatNumber(setHp)
 
-            if(dps > hp){
-                
-            }
             //setting on click for damage and checking if monster is dead
             img.addEventListener("click", dmgClick)
         
@@ -231,8 +228,8 @@
                 hpBar.style.backgroundColor = "red"
             }
             else{
-                gold.textContent = Number(gold.textContent) + goldPerKill
-                hp.textContent = setHp   
+                gold.textContent = formatNumber(Number(gold.textContent) + goldPerKill) 
+                hp.textContent = formatNumber(setHp)   
                 hpBar.style.width = "100%"
                 imageAnimation()
                 monsterPic.className = "monsterImg w-80 m-auto"
@@ -244,7 +241,7 @@
         }
 
         function imageAnimation(){
-            monsterPic.className += " animate-ping"
+            monsterPic.className = "monsterImg w-80 m-auto animate-ping"
             setTimeout(imageAnimation, 1000);
         }
         
@@ -277,6 +274,46 @@
         
 
 
+
+
+        function prettifySub(number) {
+            number = parseFloat(number.toFixed(3));
+            if (number >= 1000) number = 999;
+            number = number.toString();
+            var hasDecimal = number.split('.');
+            if (typeof hasDecimal[1] === 'undefined' || hasDecimal[0].length >= 3) return number.substring(0, 3);
+            return number.substring(0, 4);
+        }
+
+        function formatNumber(number) {
+            var numberTmp = number;
+            number = Math.round(number * 1000000) / 1000000;
+            if (!isFinite(number)) return "Infinite";
+            if (number >= 1000 && number < 10000) return Math.floor(number);
+            if (number === 0) {
+                return prettifySub(0);
+            }
+            var base = Math.floor(Math.log(number) / Math.log(1000));
+            if (base <= 0) return prettifySub(number);
+            number /= Math.pow(1000, base);
+
+                var suffices = [
+                    'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud',
+                    'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Od', 'Nd', 'V', 'Uv', 'Dv',
+                    'Tv', 'Qav', 'Qiv', 'Sxv', 'Spv', 'Ov', 'Nv', 'Tt'
+                ];
+                var suffix;
+                if ((base <= suffices.length && base > 0)) {
+                    suffix = suffices[base - 1];
+                }
+                else {
+                    var exponent = parseFloat(numberTmp).toExponential(2);
+                    exponent = exponent.replace('+', '');
+                    return exponent;
+                }
+
+                return prettifySub(number) + suffix;
+        } 
     </script>
     
 </body>
